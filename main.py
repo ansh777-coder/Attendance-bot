@@ -34,7 +34,7 @@ out_time_responses = {}
 employee_reminder_times = {}  # Track the time when the last reminder was sent
 
 # Employee phone numbers
-EMPLOYEES = ['whatsapp:+918178486210','whatsapp:+918178486210']
+EMPLOYEES = ['whatsapp:+918178486210','whatsapp:+918800177870']
 
 # Function to log data to CSV
 def log_to_csv(phone_number, date, in_time="", out_time="", present="", leave="", leave_reason=""):
@@ -166,9 +166,9 @@ def whatsapp_reply():
 if __name__ == "__main__":
     # Set up the scheduler to send reminders
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_reminder, 'cron', hour=16, minute=48, args=['attendance'], id='attendance_9_30')
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=00, args=['attendance'], id='attendance_11_30')
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=30, args=['out_time'], id='out_time_19_30')
+    scheduler.add_job(send_reminder, 'cron', hour=17, minute=22, args=['attendance'], id='attendance_9_30')
+    scheduler.add_job(send_reminder, 'cron', hour=17, minute=40, args=['attendance'], id='attendance_11_30')
+    scheduler.add_job(send_reminder, 'cron', hour=17, minute=50, args=['out_time'], id='out_time_19_30')
     scheduler.add_job(send_reminder, 'cron', hour=22, minute=30, args=['out_time'], id='out_time_22_30')
     scheduler.start()
 
