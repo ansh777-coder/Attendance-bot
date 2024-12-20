@@ -1,5 +1,5 @@
 from twilio.rest import Client
-from flask import Flask, request, Response,jsonify
+from flask import Flask, request, Response, jsonify
 from twilio.twiml.messaging_response import MessagingResponse
 import logging
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -94,6 +94,11 @@ def block_on_sunday():
     if datetime.now().strftime('%A') == 'Sunday':
         return jsonify({"message": "The service is unavailable on Sundays. Please come back tomorrow."}), 503
 
+# Simple home route to confirm the app is working
+@app.route("/")
+def home():
+    return "App is working!"
+
 # Handle incoming WhatsApp messages
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
@@ -155,7 +160,6 @@ def whatsapp_reply():
         response.message("❓ Sorry, I didn't understand that. Use:\n- 'P <time>' for present (e.g., 'P 9:00 AM')\n- 'L <reason>' for leave (e.g., 'L I am sick')\n- 'out_time <time>' to mark out time (e.g., 'out_time 6:00 PM').")
 
     return Response(str(response), mimetype="application/xml")
-
 
 
 # Main function
