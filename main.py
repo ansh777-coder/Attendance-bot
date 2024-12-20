@@ -89,11 +89,6 @@ def send_reminder(reminder_type):
             logging.info(f"Out-time reminder sent to {employee}. SID: {message.sid}")
 
 
-@app.route('/')
-def home():
-    return "Attendance Bot is running! 🚀"
-
-
 # Block reminders on sunday 
 @app.before_request
 def block_on_sunday():
@@ -160,7 +155,7 @@ def whatsapp_reply():
 if __name__ == "__main__":
     # Set up the scheduler to send reminders
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_reminder, 'cron', hour=11, minute=15, args=['attendance'], id='attendance_9_30')
+    scheduler.add_job(send_reminder, 'cron', hour=12, minute=2, args=['attendance'], id='attendance_9_30')
     scheduler.add_job(send_reminder, 'cron', hour=11, minute=30, args=['attendance'], id='attendance_11_30')
     scheduler.add_job(send_reminder, 'cron', hour=19, minute=30, args=['out_time'], id='out_time_19_30')
     scheduler.add_job(send_reminder, 'cron', hour=22, minute=30, args=['out_time'], id='out_time_22_30')
