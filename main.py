@@ -95,9 +95,9 @@ def block_on_sunday():
         return jsonify({"message": "The service is unavailable on Sundays. Please come back tomorrow."}), 503
 
 # Simple home route to confirm the app is working
-@app.route("/")
-def home():
-    return "App is working!"
+# @app.route("/")
+# def home():
+#     return "App is working!"
 
 # Handle incoming WhatsApp messages
 @app.route("/whatsapp", methods=["POST"])
@@ -166,9 +166,9 @@ def whatsapp_reply():
 if __name__ == "__main__":
     # Set up the scheduler to send reminders
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=22, args=['attendance'], id='attendance_9_30')
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=40, args=['attendance'], id='attendance_11_30')
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=50, args=['out_time'], id='out_time_19_30')
+    scheduler.add_job(send_reminder, 'cron', hour=17, minute=55, args=['attendance'], id='attendance_9_30')
+    scheduler.add_job(send_reminder, 'cron', hour=18, minute=00, args=['attendance'], id='attendance_11_30')
+    scheduler.add_job(send_reminder, 'cron', hour=18, minute=50, args=['out_time'], id='out_time_19_30')
     scheduler.add_job(send_reminder, 'cron', hour=22, minute=30, args=['out_time'], id='out_time_22_30')
     scheduler.start()
 
