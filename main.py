@@ -97,10 +97,17 @@ def block_on_sunday():
 # Handle incoming WhatsApp messages
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
-    incoming_msg = request.form.get("Body").strip()
+    # Get the incoming message and sender
+    incoming_msg = request.form.get("Body")
     employee = request.form.get("From")
-    today_date = datetime.now().strftime('%Y-%m-%d')
+    
+    if not incoming_msg or not employee:
+        logging.error("Missing 'Body' or 'From' in the request.")
+        return "Missing 'Body' or 'From' in the request.", 400  # Return Bad Request error if missing
+    
+    incoming_msg = incoming_msg.strip()  # Strip leading/trailing spaces
 
+    today_date = datetime.now().strftime('%Y-%m-%d')
     response = MessagingResponse()
 
     # Check if the employee's last reminder was within the last 24 hours
@@ -128,7 +135,7 @@ def whatsapp_reply():
         if leave_reason:
             responded_employees.add(employee)
             log_to_csv(employee, today_date, leave='Yes', leave_reason=leave_reason)
-            response.message(f"✅ Your leave has been marked successfully .Reason:{leave_reason}")
+            response.message(f"✅ Your leave has been marked successfully. Reason: {leave_reason}")
         else:
             response.message("⚠️ Please provide a reason for leave, e.g., 'L I am sick'.")
             return Response(str(response), mimetype="application/xml")
@@ -150,11 +157,12 @@ def whatsapp_reply():
     return Response(str(response), mimetype="application/xml")
 
 
+
 # Main function
 if __name__ == "__main__":
     # Set up the scheduler to send reminders
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_reminder, 'cron', hour=12, minute=2, args=['attendance'], id='attendance_9_30')
+    scheduler.add_job(send_reminder, 'cron', hour=13, minute=30, args=['attendance'], id='attendance_9_30')
     scheduler.add_job(send_reminder, 'cron', hour=14, minute=5, args=['attendance'], id='attendance_11_30')
     scheduler.add_job(send_reminder, 'cron', hour=19, minute=30, args=['out_time'], id='out_time_19_30')
     scheduler.add_job(send_reminder, 'cron', hour=22, minute=30, args=['out_time'], id='out_time_22_30')
