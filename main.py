@@ -166,7 +166,7 @@ def whatsapp_reply():
 if __name__ == "__main__":
     # Set up the scheduler to send reminders
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_reminder, 'cron', hour=17, minute=55, args=['attendance'], id='attendance_9_30')
+    scheduler.add_job(send_reminder, 'cron', hour=14, minute=00, args=['attendance'], id='attendance_9_30')
     scheduler.add_job(send_reminder, 'cron', hour=18, minute=00, args=['attendance'], id='attendance_11_30')
     scheduler.add_job(send_reminder, 'cron', hour=18, minute=50, args=['out_time'], id='out_time_19_30')
     scheduler.add_job(send_reminder, 'cron', hour=22, minute=30, args=['out_time'], id='out_time_22_30')
