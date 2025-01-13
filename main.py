@@ -34,7 +34,7 @@ out_time_responses = {}
 employee_reminder_times = {}  # Track the time when the last reminder was sent
 
 # Employee phone numbers
-EMPLOYEES = ['whatsapp:+918178486210','whatsapp:+918800177870']
+EMPLOYEES = ['whatsapp:mobile1','whatsapp:+mobile2']
 
 # Function to log data to CSV
 def log_to_csv(phone_number, date, in_time="", out_time="", present="", leave="", leave_reason=""):
